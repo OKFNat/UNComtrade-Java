@@ -65,7 +65,7 @@ public class UNComtrade {
     protected CloseableHttpClient httpClient;
 
     /**
-     * The metadata for all of the requests so far.
+     * The "validation" metadata for all of the requests so far.
      */
     protected Stack<JsonObject> responseMetadata;
 
@@ -266,6 +266,13 @@ public class UNComtrade {
             }
         }
         return url.toString();
+    }
+
+    /**
+     * @return The "validation" metadata returned for the latest request.
+     */
+    public JsonObject getLastResponseMetadata() {
+        return responseMetadata.peek();
     }
 
     /**
