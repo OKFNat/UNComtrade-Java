@@ -41,10 +41,9 @@ import com.google.gson.JsonParser;
  * <pre>
  * {@code
  *   UNComtrade client = new UNComtrade();
- *   client.set
- *
- *
- *
+ *   client.setPartnerArea("0");
+ *   client.setTimePeriod("2012,2013,2014");
+ *   DataSet results = client.retrieve();
  * }
  * </pre>
  */

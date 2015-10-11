@@ -12,6 +12,8 @@
 	<classpathentry kind="lib" path="lib/httpmime-4.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jna-4.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.2.jar" sourcepath="/home/thomas/Dokumente/Programmieren/Java/Libraries/src/commons-beanutils-1.9.2-src/src/main/java"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
