@@ -12,6 +12,7 @@ import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
@@ -32,6 +33,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import at.okfn.uncomtrade.parameters.ValidParameters;
+
 
 /**
  * Provides an object-oriented interface to the UN Comtrade database.
@@ -39,11 +42,12 @@ import com.google.gson.JsonParser;
  * Use like this:
  *
  * <pre>
+ *
  * {@code
- *   UNComtrade client = new UNComtrade();
- *   client.setPartnerArea("0");
- *   client.setTimePeriod("2012,2013,2014");
- *   DataSet results = client.retrieve();
+ *     UNComtrade client = new UNComtrade();
+ *     client.setPartnerArea("0");
+ *     client.setTimePeriod("2012,2013,2014");
+ *     DataSet results = client.retrieve();
  * }
  * </pre>
  */
@@ -85,7 +89,7 @@ public class UNComtrade {
             String verb = null;
 
             boolean printSeparator = false;
-            for (int i = 0; i < args.length; ++i) {
+            outer: for (int i = 0; i < args.length; ++i) {
                 if (printSeparator) {
                     System.out.println("\n");
                 }
@@ -163,6 +167,21 @@ public class UNComtrade {
                         }
                         else {
                             defaultParams.put(Parameters.DATA_FREQUENCY, "A");
+                        }
+
+                    case "-a":
+                    case "--allowed-values":
+                        ValidParameters validParams;
+                        switch (args[++i]) {
+                            case "reporter":
+                                validParams = ValidParameters.create(Parameters.REPORTER);
+                                break;
+
+                            default:
+                                continue outer;
+                        }
+                        for (Entry<String, String> parameter : validParams.getValues().entrySet()) {
+                            System.out.println(String.format("%8s", parameter.getKey()) + " | " + parameter.getValue());
                         }
                 }
             }
@@ -253,7 +272,7 @@ public class UNComtrade {
     public String getApiUrl() {
         StringBuilder url = new StringBuilder(baseUrl);
         boolean first = true;
-        for (Map.Entry<String, String> entry : params.entrySet()) {
+        for (Entry<String, String> entry : params.entrySet()) {
             url.append(first ? '?' : '&');
             first = false;
             url.append(entry.getKey());
