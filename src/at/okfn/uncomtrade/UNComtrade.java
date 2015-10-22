@@ -178,7 +178,13 @@ public class UNComtrade {
                                 break;
 
                             default:
-                                continue outer;
+                                try {
+                                    validParams = ValidParameters.create(args[i]);
+                                }
+                                catch (IllegalArgumentException e) {
+                                    System.err.println("Error: Unknown REST parameter/name: \"" + args[i] + "\".");
+                                    continue outer;
+                                }
                         }
                         for (Entry<String, String> parameter : validParams.getValues().entrySet()) {
                             System.out.println(String.format("%8s", parameter.getKey()) + " | " + parameter.getValue());
@@ -187,13 +193,23 @@ public class UNComtrade {
             }
         }
         catch (ClientProtocolException e) {
-            e.printStackTrace(System.err);
+            e.printStackTrace();
         }
         catch (IOException e) {
-            e.printStackTrace(System.err);
+            e.printStackTrace();
         }
         catch (InterruptedException e) {
-            e.printStackTrace(System.err);
+            e.printStackTrace();
+        }
+        catch (IndexOutOfBoundsException e) {
+            String command = "???";
+            for (int i = args.length - 1; i >= 0; --i) {
+                if (args[i].startsWith("-")) {
+                    command = args[i];
+                    break;
+                }
+            }
+            System.err.println("Error: Not enough arguments given for option/command \"" + command + "\".");
         }
     }
 
