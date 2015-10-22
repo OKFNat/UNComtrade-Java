@@ -186,7 +186,7 @@ public class UNComtrade {
                                     continue outer;
                                 }
                         }
-                        for (Entry<String, String> parameter : validParams.getValues().entrySet()) {
+                        for (Entry<String, String> parameter : validParams.getSortedValues()) {
                             System.out.println(String.format("%8s", parameter.getKey()) + " | " + parameter.getValue());
                         }
                 }

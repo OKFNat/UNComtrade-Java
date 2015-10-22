@@ -6,11 +6,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -93,6 +96,59 @@ public abstract class ValidParameters {
             }
         }
         return values;
+    }
+
+    /**
+     * Retrieve a sorted set of valid values for this parameter.
+     *
+     * The set is sorted by the human-readable labels, which are the map entry
+     * values.
+     *
+     * @return A sorted set of valid parameter values.
+     *
+     * @throws IOException
+     *             If any I/O error occurred.
+     */
+    public SortedSet<Entry<String, String>> getSortedValues() throws IOException {
+        SortedSet<Entry<String, String>> sortedSet = new TreeSet<>(getMapEntryComparator());
+        sortedSet.addAll(getValues().entrySet());
+        return sortedSet;
+    }
+
+    /**
+     * Retrieve a sorted set of valid values for this parameter.
+     *
+     * The set is sorted by the human-readable labels, which are the map entry
+     * values.
+     *
+     * @param input
+     *            The user input which should be matched against the possible
+     *            parameter values (both values and their labels).
+     *
+     * @return A sorted set of valid parameter values.
+     *
+     * @throws IOException
+     *             If any I/O error occurred.
+     */
+    public SortedSet<Entry<String, String>> getSortedValues(String input) throws IOException {
+        SortedSet<Entry<String, String>> sortedSet = new TreeSet<>(getMapEntryComparator());
+        sortedSet.addAll(getValues(input).entrySet());
+        return sortedSet;
+    }
+
+    /**
+     * @return A Comparator to use for ordering string/string map entries by
+     *         value.
+     */
+    protected Comparator<Entry<String, String>> getMapEntryComparator() {
+        return new Comparator<Entry<String, String>>() {
+
+            @Override
+            public int compare(Entry<String, String> o1, Entry<String, String> o2) {
+                return o1.getValue().compareToIgnoreCase(o2.getValue());
+            }
+
+        };
     }
 
     /**
