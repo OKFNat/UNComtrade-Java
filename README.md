@@ -33,3 +33,12 @@ The following external libraries are needed to use this package:
 * httpmime-4.5.1.jar
 * jna-4.1.0.jar
 * jna-platform-4.1.0.jar
+
+
+## Copyright
+
+All sourcecode is free software: you can redistribute and/or modify it under the terms of the MIT License (see the LICENSE file).
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Visit [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT) to learn more about the MIT License.
